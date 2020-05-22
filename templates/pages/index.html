@@ -1,0 +1,165 @@
+
+{% extends 'base.html'%} 
+
+{% load humanize %}
+
+{% block title %} | Welcome {% endblock %}
+
+{% block content%}
+
+<!-- Showcase -->
+  <section id="showcase">
+    <div class="container text-center">
+      <div class="home-search p-5">
+        <div class="overlay p-5">
+          <h1 class="display-4 mb-4">
+            Elevator and Escalator Searching Just Got So Easy
+          </h1>
+          <p class="lead"> Get nearest supplier to your site project with european standards product with third party auditing of installation quality and all your data from order date to lifelong service in cloud
+            platform with advanced technologies like  ML, AI, IOT </p>
+          <div class="search">
+            <form action="{% url 'search' %}">
+              <!-- Form Row 1 -->
+              <div class="form-row">
+                <div class="col-md-4 mb-3">
+                  <label class="sr-only">Keywords</label>
+                  <input type="text" name="keywords" class="form-control" placeholder="Keyword (passenger,stops etc)">
+                </div>
+
+                <div class="col-md-4 mb-3">
+                  <label class="sr-only">City</label>
+                  <input type="text" name="city" class="form-control" placeholder="City">
+                </div>
+
+                <div class="col-md-4 mb-3">
+                  <label class="sr-only">State</label>
+                  <select name="state" class="form-control">
+                    <option selected="true" disabled="disabled">State (All)</option>
+                    {% for key,value in state_choices.items %}
+                       <option value="{{ key }}">{{ value }}</option>
+                    {% endfor %}
+                  </select>
+                </div>
+              </div>
+              <!-- Form Row 2 -->
+              <div class="form-row">
+                <div class="col-md-6 mb-3">
+                  <label class="sr-only">Number of passenger</label>
+                  <select name="passenger" class="form-control">
+                    <option selected="true" disabled="disabled">Passenger </option>
+                    {% for key,value in passenger_choices.items %}
+                      <option value="{{ key }}">{{ value }}</option>
+                    {% endfor %}
+                    
+                  </select>
+                </div>
+                <div class="col-md-6 mb-3">
+                  <select name="price" class="form-control" id="type">
+                    <option selected="true" disabled="disabled">Number of Stops</option>
+                    {% for key,value in stops_choices.items %}
+                       <option value="{{ key }}">{{ value }}</option>
+                    {% endfor %}
+                  </select>
+                </div>
+              </div>
+              <button class="btn btn-secondary btn-block mt-4" type="submit">Submit form</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-- Alerts -->
+    {% include 'partials/_alerts.html' %}
+  <!-- Products -->
+  <section id="products" class="py-5">
+    <div class="container">
+      <h3 class="text-center mb-3">Frequently searched Products</h3>
+      <div class="row">
+
+        {%if products %}
+           {%for product in products %}
+            <!-- Product 1 -->
+        <div class="col-md-6 col-lg-4 mb-4">
+          <div class="card listing-preview">
+            <img class="card-img-top" src="{{product.photo_main.url}}" alt="">
+            <div class="card-img-overlay">
+              <h2>
+                <span class="badge badge-secondary text-white">Rs:{{product.Price | intcomma }}</span>
+              </h2>
+            </div>
+            <div class="card-body">
+              <div class="listing-heading text-center">
+                <h4 class="text-primary">{{ product.title}}</h4>
+                <p>
+                  <i class="fas fa-map-marker text-secondary"></i> {{ product.Machine_room}}</p>
+              </div>
+              <hr>
+              <div class="row py-2 text-secondary">
+                <div class="col-6">
+                  <i class="fas fa-th-large"></i> No. of stops: {{product.Num_Stops}}</div>
+                <div class="col-6">
+                  <i class="fas fa-car"></i>  Door Size: {{product.door_size}}</div>
+              </div>
+              <div class="row py-2 text-secondary">
+                <div class="col-6">
+                  <i class="fas fa-bed"></i> Shaft Depth (std): {{product.shaft_depth}} mm</div>
+                <div class="col-6">
+                  <i class="fas fa-bath"></i>  Shaft Width (std): {{product.shaft_width}} mm</div>
+              </div>
+              <hr>
+              <div class="row py-2 text-secondary">
+                <div class="col-12">
+                  <i class="fas fa-user"></i>{{product.supplier}}</div>
+              </div>
+              <div class="row text-secondary pb-2">
+                <div class="col-6">
+                  <i class="fas fa-clock"></i> {{product.product_date | timesince }}</div>
+              </div>
+              <hr>
+              <a href="{% url 'product' product.id %}" class="btn btn-primary btn-block">More Info</a>
+            </div>
+          </div>
+        </div>
+
+           {% endfor %}
+        {% else %}
+        <div class="col-md-12">
+          <p>No Products avilable </p>
+        </div>
+        {% endif %}
+
+
+      </div>
+
+   
+    </div>
+  </section>
+
+  <section id="services" class="py-5 bg-secondary text-white">
+    <div class="container">
+      <div class="row text-center">
+        <div class="col-md-4">
+          <i class="fas fa-comment fa-4x mr-4"></i>
+          <hr>
+          <h3>Quality</h3>
+           <ul> Manufacturing quality audit as per EN81 European standard</ul>
+           <ul>Installtion third party quality Audit report upto Handing over</ul>
+        </div>
+        <div class="col-md-4">
+          <i class="fas fa-home fa-4x mr-4"></i>
+          <hr>
+          <h3>After Installtion services</h3>
+          <p> Annual Maintenance , Predictive Maintenance and shortiest time breakdown attending by using advanced technologies like IOT ML and Artificial Inteligence </p>
+        </div>
+        <div class="col-md-4">
+          <i class="fas fa-suitcase fa-4x mr-4"></i>
+          <hr>
+          <h3>Replacing Controler to Advanced IOT enabled controller</h3>
+          <p> After replacement giving services using advanced technologies</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+{% endblock %}

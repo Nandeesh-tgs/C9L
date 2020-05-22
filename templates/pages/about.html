@@ -1,0 +1,111 @@
+{% extends 'base.html'%} 
+
+{% load static %}
+
+{% block title %} | About Us {% endblock %}
+
+{% block content%}
+
+<section id="showcase-inner" class="py-5 text-white">
+    <div class="container">
+      <div class="row text-center">
+        <div class="col-md-12">
+          <h1 class="display-4">About Cloud9 lift</h1>
+          <p class="lead"> Design, Manufacture , Installation , Commissioning and Service all updates on cloud </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Breadcrumb -->
+  <section id="bc" class="mt-3">
+    <div class="container">
+      <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item">
+            <a href="{% url 'index'%}">
+              <i class="fas fa-home"></i> Home</a>
+          </li>
+          <li class="breadcrumb-item active"> About</li>
+        </ol>
+      </nav>
+    </div>
+  </section>
+
+  <section id="about" class="py-4">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-8">
+          <h2>We Search For The perfect Installers close to your site for better Installation and service</h2>
+          <p class="lead">European Standard EN81 </p>
+          <img src="{% static 'img/about1.jpg'%}" alt="">
+          <p class="mt-4">
+            <li>Find best Installers near to your site</li>
+            <li>Supply EN 81 European standard Material to site</li>
+            <li>Moniter stage wise quality by third party and submit report to Customer </li>
+            <li>Handing over product</li>
+            <li>Customer dashboard (All documents from order to service in cloud ) </li>
+            <li>Advanced controller (Predictive manitenance ,Breakdown alerts to mobile,online monitering elevator performance etc) </li>
+
+          </p>
+        </div>
+        <div class="col-md-4">
+          {% if mvp_supplier %}
+            {% for supplier in mvp_supplier %}
+              <div class="card">
+                <img class="card-img-top" src="{{ Supplier.logo.url }}" alt="Seller of the month">
+                <div class="card-body">
+                  <h5 class="card-title">Seller Of The Month</h5>
+                  <h6 class="text-secondary">{{ Supplier.company_name}}</h6>
+                  <p class="card-text"> {{ Supplier.about_company}}
+                    content.
+                  </p>
+                </div>
+              </div>
+            {% endfor%}
+          {% endif %}
+         
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Work -->
+  <section id="work" class="bg-dark text-white text-center">
+    <h2 class="display-4">We Work For You</h2>
+    <h4>Lorem ipsum dolor sit amet consectetur adipisicing elit. Autem velit aperiam, unde aliquid at similique!</h4>
+    <hr>
+    <a href="{% url 'index' %}" class="btn btn-secondary text-white btn-lg">View Our Product Listings</a>
+  </section>
+
+  <!-- Team -->
+  <section id="suppliers" class="py-5">
+    <div class="container">
+      <h2 class="text-center">Our Team: top three performer of the month</h2>
+      <div class="row text-center">
+          {% if suppliers  %}
+            {% for supplier in suppliers %}
+              
+              <div class="col-md-4">
+                <img src="{{ supplier.logo.url}}" alt="" class="rounded-circle mb-3">
+                <h4>{{ supplier.company_name}}</h4>
+                <p class="text-success"> Suppliers /p>
+                <hr>
+                <p>
+                  <i class="fas fa-phone"></i> {{ supplier.address}}</p>
+                <p>
+                  <i class="fas fa-envelope-open"></i>{{ supplier.city}}{{ supplier.state}}</p>
+              </div>
+            {%endfor%}
+          {%else%}
+           <div class= "col-md-12">
+             <p>Supplier not avilable</p> 
+           </div>
+          {% endif %}
+      
+
+      </div>
+    </div>
+  </section>
+
+{% endblock %}
